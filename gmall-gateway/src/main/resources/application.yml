@@ -1,0 +1,69 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: pms-route
+          uri: lb://pms-service
+          predicates:
+              - Path=/pms/**
+        - id: sms-route
+          uri: lb://sms-service
+          predicates:
+              - Path=/sms/**
+        - id: wms-route
+          uri: lb://wms-service
+          predicates:
+              - Path=/wms/**
+        - id: ums-route
+          uri: lb://ums-service
+          predicates:
+              - Path=/ums/**
+        - id: oms-route
+          uri: lb://oms-service
+          predicates:
+              - Path=/oms/**
+        - id: search-route
+          uri: lb://search-service
+          predicates:
+              - Host=search.gmall.com
+        - id: index-route #同步请求路由
+          uri: lb://index-service
+          predicates:
+              - Host=gmall.com, www.gmall.com
+          filters:
+            - AddResponseHeader=xxx,yyyy
+            - Auth=/xxx
+
+        - id: index-route2  #异步请求路由 路径方式
+          uri: lb://index-service
+          predicates:
+              - Path=/index/**
+        - id: index-route2  #异步请求路由 路径方式
+          uri: lb://item-service
+          predicates:
+              - Host=item.gmall.com
+        - id: auth-route
+          uri: lb://auth-service
+          predicates:
+              - Host=sso.gmall.com
+
+        - id: cart-route
+          uri: lb://cart-service
+          predicates:
+              - Host=cart.gmall.com
+
+        - id: order-route
+          uri: lb://order-service
+          predicates:
+            - Host=order.gmall.com
+          filters:
+            - Auth=/
+jwt:
+  pubFilePath: D:\Project\token\rsa.pub
+  cookieName: GMALL-TOKEN
+  token: token

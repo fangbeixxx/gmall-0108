@@ -1,0 +1,41 @@
+server:
+  port: 18086
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  zipkin:
+    discovery-client-enabled: true
+    sender:
+      type: web
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1   #采样率   减少一部分数据量
+  elasticsearch:
+    rest:
+      uris: http://192.168.147.128:9200
+  jackson:
+    default-property-inclusion: non_null
+  thymeleaf:
+    cache : false
+  rabbitmq:
+    host: 192.168.147.128
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /fangbei
+    listener:
+      simple:
+        prefetch: 1
+        concurrency: 4
+      direct:
+        acknowledge-mode: manual #手动确认
+feign:
+  sentinel:
+    enabled: true

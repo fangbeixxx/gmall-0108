@@ -1,0 +1,27 @@
+server:
+  port: 18087
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+        port: 8719
+  zipkin:
+    discovery-client-enabled: true
+    sender:
+      type: web
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1   #采样率   减少一部分数据量
+  thymeleaf:
+    cache : false
+  redis:
+    host: 192.168.147.128
+    port: 6379
+feign:
+  sentinel:
+    enabled: true
